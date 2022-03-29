@@ -7,8 +7,8 @@ class MyBarrier extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 60,
       height: size,
+      width: 60,
       decoration: BoxDecoration(
         color: Colors.green,
         border: Border.all(width: 5, color: Colors.greenAccent),

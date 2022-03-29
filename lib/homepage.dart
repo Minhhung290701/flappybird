@@ -15,9 +15,13 @@ class _HomePageState extends State<HomePage> {
   double initialHeight = 0;
   bool gameHasStarted = false;
   static double BarrierXone = 1.5;
-  double BarrierXtwo = BarrierXone + 1.21;
-  double score = 0;
-  double best = 0;
+  double BarrierXtwo = BarrierXone + 1.2;
+  int score = 0;
+  int best = 0;
+  bool check1 = false;
+  bool check2 = false;
+
+
 
   void jump() {
     setState(() {
@@ -31,27 +35,38 @@ class _HomePageState extends State<HomePage> {
     Timer.periodic(Duration(milliseconds: 60), (timer) {
       time += 0.05;
       height = -4.9 * time * time + 2.8 * time;
-      setState(() {
-        birdYaxis = initialHeight - height;
+      birdYaxis = initialHeight - height;
 
+      setState(() {
         if (BarrierXone < -1.2) {
           BarrierXone += 2.2;
+          check1 = false;
         } else {
           BarrierXone -= 0.03;
+        }
+        if (BarrierXone < 0 && !check1) {
+          score++;
+          check1 = true;
         }
       });
 
       setState(() {
         if (BarrierXtwo < -1.2) {
           BarrierXtwo += 2.2;
+          check2 = false;
         } else {
           BarrierXtwo -= 0.03;
         }
+        if (BarrierXtwo == 0) {
+          score++;
+        }
       });
-      if (birdYaxis > 1 ) {
+
+
+      if (birdYaxis > 1 || birdYaxis < -1 ) {
         timer.cancel();
-        _showDialog();
         gameHasStarted = false;
+        if(score>best) best = score;
       }
     });
   }
@@ -62,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context) {
           return AlertDialog(
             title: Text('GAME OVER'),
-            content: Text('SCORE: '),
+            content: Text('Score: ' + score.toString()),
             actions: <Widget>[
               TextButton(
                 child: Text("Play Againt"),
@@ -138,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment(BarrierXtwo, -1.1),
                       duration: Duration(milliseconds: 0),
                       child: MyBarrier(
-                        size: 100.0,
+                        size: 150.0,
                       ),
                     ),
                   ],
@@ -164,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Text(
-                        "0",
+                        '${score.toString()}',
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       )
                     ],
@@ -180,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       Text(
-                        "0",
+                        best.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 30),
                       )
                     ],
