@@ -8,7 +8,7 @@ class MyBird extends StatelessWidget {
       height: 70,
       width: 70,
       child: Image.asset(
-        'lib/images/flappybird.png'
+        'asset/images/flappybird.png'
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flappy/bird.dart';
 import 'package:flutter/material.dart';
 import 'package:flappy/barriers.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,6 +21,9 @@ class _HomePageState extends State<HomePage> {
   int best = 0;
   bool check1 = false;
   bool check2 = false;
+  static AudioPlayer audioPlayer = new AudioPlayer(mode: PlayerMode.MEDIA_PLAYER);
+  String path = 'asset/sound/soundtrack.mp3';
+
 
 
 
@@ -160,7 +164,7 @@ class _HomePageState extends State<HomePage> {
                 )),
             Container(
               height: 10,
-              child: Image.asset("lib/images/grass.png"),
+              child: Image.asset("asset/images/grass.png"),
             ),
             Expanded(
                 child: Container(
